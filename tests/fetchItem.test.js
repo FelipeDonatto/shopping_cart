@@ -13,7 +13,7 @@ describe('2 - Teste a função fetchItem', () => {
   })
   it('chama o fetch com o endpoint da API mercado livre', async () => {
     await fetchItem('MLB1615760527');
-    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/sites/MLB/search?q=MLB1615760527');
+    expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1615760527');
   })
   it('retorna o objeto esperado', async () => {
     expect(await fetchItem('MLB1615760527')).toEqual(item);
