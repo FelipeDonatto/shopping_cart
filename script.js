@@ -47,5 +47,16 @@ products.then((data) => {
     itemDiv.appendChild(createProductItemElement(obj));
   });
 });
-
+const cart = document.querySelector('.cart__items');
+itemDiv.addEventListener('click', (event) => {
+  const { parentNode } = event.target;
+  const id = parentNode.querySelector('.item__sku').innerText;
+  fetchItem(id)
+  .then((element) => {
+    const obj = { sku: element.id, name: element.title, salePrice: element.price };
+    if (event.target.classList.contains('item__add')) {
+      cart.appendChild(createCartItemElement(obj));
+    }    
+  });
+});
 window.onload = () => { };
