@@ -7,7 +7,6 @@ const fetchItem = async (id) => {
   return data;
 };
 
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchItem,
