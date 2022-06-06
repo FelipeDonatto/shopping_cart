@@ -1,6 +1,29 @@
 const products = fetchProducts('computador').then((jsonBody) => jsonBody.results);
 const cart = document.querySelector('.cart__items');
 
+function amountToPay() {
+  const priceCheck = document.querySelectorAll('.cart__item');
+  const priceSpan = document.querySelector('.total-price');
+  if (priceCheck.length > 0) {
+  let totalPrice = 0;
+  priceCheck.forEach((element) => {
+    const priceTag = element.innerText.split('PRICE: $');
+    const price = parseFloat(priceTag[1], 0);
+    totalPrice += price;
+    priceSpan.innerHTML = totalPrice;
+  });
+  } else {
+  priceSpan.innerHTML = 0;
+  }
+}
+
+  const clearBtn = document.querySelector('.empty-cart');
+  clearBtn.addEventListener('click', () => {
+    cart.innerHTML = '';
+    amountToPay();
+    saveCartItems('');
+  });
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,6 +54,7 @@ const cartItemClickListener = (event) => {
     if (event.target.classList.contains('cart__item')) {
       cart.removeChild(event.target);
       saveCartItems(cart.innerHTML);
+      amountToPay();
     }
 };
 
@@ -59,12 +83,15 @@ itemDiv.addEventListener('click', (event) => {
     if (event.target.classList.contains('item__add')) {
       cart.appendChild(createCartItemElement(obj));
       saveCartItems(cart.innerHTML);
+      amountToPay();
     }    
   });
 });
+
 window.onload = () => { 
   getSavedCartItems();
   const cartContent = () => document.querySelectorAll('.cart__item')
     .forEach((element) => element.addEventListener('click', cartItemClickListener));
   cartContent();
+  amountToPay();
 };
