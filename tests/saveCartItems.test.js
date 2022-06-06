@@ -4,6 +4,13 @@ const saveCartItems = require('../helpers/saveCartItems');
 localStorageSimulator('setItem');
 
 describe('3 - Teste a função saveCartItems', () => {
-  // implemente seus testes aqui
-  fail('Teste vazio');
+  beforeEach(async () => {
+    await saveCartItems('<ol><li>Item</li></ol>');
+  })
+  it('chama o localStorage', async () =>{
+    expect(localStorage.setItem).toHaveBeenCalled();
+  })
+  it('chama o localStorage', async () =>{
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', '<ol><li>Item</li></ol>');
+  })
 });
