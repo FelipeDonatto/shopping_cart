@@ -67,12 +67,20 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const itemDiv = document.querySelector('.items');
+const loading = document.createElement('span');
+loading.innerText = 'Carregando, por favor aguarde.';
+loading.classList.add('loading');
+const itemsContainer = document.querySelector('.items');
+itemsContainer.appendChild(loading);
+
 products.then((data) => {
+  itemsContainer.removeChild(loading);
   data.forEach((element) => {
     const obj = { sku: element.id, name: element.title, image: element.thumbnail };
     itemDiv.appendChild(createProductItemElement(obj));
   });
-});
+})
+.catch();
 
 itemDiv.addEventListener('click', (event) => {
   const { parentNode } = event.target;
